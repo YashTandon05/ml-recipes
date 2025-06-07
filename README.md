@@ -1,16 +1,19 @@
 # The Satisfaction of Food; The Downfall of the World: A Machine Learning project that investigates Ratings on Recipes
 A Data Science project that investigates a recipes dataset to create a machine learning model to predict ratings of recipes
 
-## Intro 
-### Our Dataset 
-
-The dataset we have chosen for this project is the recipe rating dataset from food.com. This dataset encompasses a large amount of recipes each with their own subset of ratings and reviews along with additional data regarding the ingredients, listed tags, date of submission and more! In this project we will focus on analyzing the trends and patterns between the features for each recipe and their corresponding ratings to derive insights regarding the same. 
+## Intro
 
 ### Datascience Question
 
 Is there a relationship between recipe ratings and the given features of the dataset and how reliably can we predict it?
+
+### Our Dataset 
+
+The dataset we have chosen for this project is the recipe rating dataset from food.com. This dataset encompasses a large amount of recipes each with their own subset of ratings and reviews along with additional data regarding the ingredients, listed tags, date of submission and more! In this project we will focus on analyzing the trends and patterns between the features for each recipe and their corresponding ratings to derive insights regarding the same. The reason we chose it because we have become very health conscious in recent years. We go to the gym together and we make a lot of meals in our apartment. Concerned about the health of the United States, we wanted to do a study to see how our country views recipes, especially those which are healthier than others. Through our study, one can find out whether it's possible to describe how well a recipe is liked through the features that it composes of, giving us insight into what makes recipes popular. 
+
 ### Describing the Dataset
 We are working with two seperate datasets. The first one consists of the Recipe information, and has 83782 rows representing unique recipes. 
+
 | Columm Name | Description |
 |----------|----------|
 | `name`      | Name of the recipe       |
@@ -57,21 +60,15 @@ In order to clean and tidy the dataset for analysis, we took the following steps
 	- The last features we added were average and bayesian ratings. 
 		- Average ratings are given by the mean of each recipe
 		- Bayesian ratings give a more informed average rating for each recipe as it accounts for not only the recipe's true mean but also the skew of ratings in the dataset by incorporating the overall recipe mean. 
-			- The Bayesian average is computed as:
-$$
-\text{Bayesian Rating} = \frac{v}{v + m} \cdot R + \frac{m}{v + m} \cdot C
-$$
-
-  Where:
-
-- \( R \) = average rating for the recipe
-
-- \( v \) = number of ratings for the recipe
-
-- \( m \) = minimum number of ratings required to be considered (smoothing constant) which is chosen by us
-	- We chose 4 because it's distribution was the closest to a normal distribution after various trials
-
-- \( C \) = global average rating across all recipes
+			- The Bayesian average is computed as: $\text{Bayesian Rating} = \frac{v}{v + m} \cdot R + \frac{m}{v + m} \cdot C$, where:
+            
+            \( R \) = average rating for the recipe
+            
+            \( v \) = number of ratings for the recipe
+            
+            \( m \) = minimum number of ratings required to be considered (smoothing constant) which is chosen by us. We chose 4 because it's distribution was the closest to a normal distribution after various trials
+            
+            \( C \) = global average rating across all recipes
 
 
 5. Fixing NaN Nalues
@@ -79,6 +76,7 @@ Lastly we had to fix all the NaN values of our final cleaned dataset
 	- Ratings are usually on 1-5 scale. We know that ratings of 0 are representative of missing ratings. This means that all recipes with calories=0 have NaNs due to error from DivisionByZero so we can replace them with 0
 
 ### Columns of cleaned and tidied DataFrame
+
 | Column Name            | Data Type      |
 |:-----------------------|:---------------|
 | recipe_name            | object         |
@@ -121,7 +119,9 @@ The cleaned and tidied DataFrame after merging has 234429 rows and 25 columns. T
 | 412 broccoli casserole               |      306168 |        40 |            50969 | 2008-05-30 00:00:00      | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |         6 | ['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray ', 'set aside', 'in a large bowl mix together broccoli ', 'soup ', 'one cup of cheese ', 'garlic powder ', 'pepper ', 'salt ', 'milk ', '1 cup of french onions ', 'and soy sauce', 'pour into baking dish ', 'sprinkle remaining cheese over top', 'bake for 25 minutes or until cheese is lightly browned', 'sprinkle with rest of french fried onions and bake until onions are browned and cheese is bubbly ', 'about 10 more minutes']                                                                                                                                                                                                                                                                                                                      | since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 | 768828           | 2013-08-02 00:00:00  |        5 | Loved this.  Be sure to completely thaw the broccoli.  I didn&#039;t and it didn&#039;t get done in time specified.  Just cooked it a little longer though and it was perfect.  Thanks Chef.                                                                                                                                                     |      194.8 |              20 |           6 |           32 |            22 |                  36 |                   3 |       0.225873  |                5 |           4.68986 |
 
 ### Univariate Plot: Distribution of Protein-Calorie Ratios across Recipes
+
 We decided to plot the distribution of Protein-Calorie Ratios across all of the recipes in the dataset. As shown below, the distribution is heavily skewed to the right, as the modal Protein-Calorie Ratio is around 0.05. This means that most recipes' calories aren't made up by Protein. Only a very low proportion of recipes have a Protein-Calorie ratio of greater than 0.5.
+
 <iframe
   src="assets/univariate.html"
   width="800"
@@ -130,7 +130,9 @@ We decided to plot the distribution of Protein-Calorie Ratios across all of the 
 ></iframe>
   
 ### Bivariate Plot: Average Protein-Calorie Ratio by Vegan Status
+
 We plotted a bar chart which displays the average Protein-Calorie ratio of recipes that are and aren't Vegan. A recipe is classified "Vegan" if it contains "Vegan" in its tag list. The recipes that aren't Vegan have a greater average Protein-Calorie Ratio (~0.16) than recipes that are Vegan (~0.10)
+
 <iframe
   src="assets/bivariate.html"
   width="800"
@@ -139,7 +141,9 @@ We plotted a bar chart which displays the average Protein-Calorie ratio of recip
 ></iframe>
   
 ### Interesting Aggregates
+
 For the Aggregation table, we chose to look at the relationship between the number of ingredients and the nutrition values (saturated fats, protein, carbohydrates, and calories). This information is significant because it can show whether complexity of a recipe can determine it's nutritional content. When choosing features for our model, this information will help us pick variables that are not redundant to avoid multicollinearity. From the table, it's unlikely that this is the case.
+
 |   ('saturated_fat_PDV', 'mean') |   ('saturated_fat_PDV', 'median') |   ('saturated_fat_PDV', 'max') |   ('saturated_fat_PDV', 'min') |   ('saturated_fat_PDV', 'std') |   ('protein_PDV', 'mean') |   ('protein_PDV', 'median') |   ('protein_PDV', 'max') |   ('protein_PDV', 'min') |   ('protein_PDV', 'std') |   ('carbohydrates_PDV', 'mean') |   ('carbohydrates_PDV', 'median') |   ('carbohydrates_PDV', 'max') |   ('carbohydrates_PDV', 'min') |   ('carbohydrates_PDV', 'std') |   ('calories', 'mean') |   ('calories', 'median') |   ('calories', 'max') |   ('calories', 'min') |   ('calories', 'std') |
 |--------------------------------:|----------------------------------:|-------------------------------:|-------------------------------:|-------------------------------:|--------------------------:|----------------------------:|-------------------------:|-------------------------:|-------------------------:|--------------------------------:|----------------------------------:|-------------------------------:|-------------------------------:|-------------------------------:|-----------------------:|-------------------------:|----------------------:|----------------------:|----------------------:|
 |                        162.448  |                              33   |                            510 |                              0 |                       207.329  |                   53.0938 |                        17   |                      157 |                        0 |                  60.679  |                         5.71875 |                                 1 |                             66 |                              0 |                        9.20035 |               1151.86  |                   230    |                3590.2 |                   7.8 |              1333.42  |
@@ -211,7 +215,7 @@ To test this, a permutation test was run by shuffling the `is_nan_rating` column
   frameborder="0"
 ></iframe>
 
-The observed statistic of this test is around 51.45. The resulting p value is 0.107. Since this is greater than the significance level we chose (0.107 > 0.01), we fail to reject the null hypothesis. Thus, the missingness of the `rating` column does not depend on the cooking time, measured in minutes, of the recipe.
+The observed statistic of this test is around 51.45. The resulting p value is 0.107. Since this is greater than the significance level we chose (0.107 > 0.01), we fail to reject the null hypothesis. Thus, it is likely that the missingness of the `rating` column does not depend on the cooking time, measured in minutes, of the recipe.
 
 
 Next, we will find out whether the missingness of the ratings column depends on the number of steps, `n_steps`.
@@ -233,7 +237,240 @@ To test this, a permutation test was run by shuffling the `is_nan_rating` column
   frameborder="0"
 ></iframe>
 
-The observed statistic of this test is around 1.34. The resulting p value is 0.0. Since this is less than the significance level we chose (0.0 < 0.01), we reject the null hypothesis. Thus, the missingness of the `rating` column does depend on the number of steps, `n_steps`, of the recipe.
+The observed statistic of this test is around 1.34. The resulting p value is 0.0. Since this is less than the significance level we chose (0.0 < 0.01), we reject the null hypothesis. Thus, it is likely that the missingness of the `rating` column does depend on the number of steps, `n_steps`, of the recipe.
 
 ## Hypothesis Testing
 
+The question we want to answer is: Is there a significant difference in the Protein-Calorie ratio between recipes with high average bayesian ratings (>=4.75) and low average bayesian ratings (<4.75)?
+
+Below are the Null and Alternate hypotheses we propose for this test:
+
+$$H_0: \text{There is no difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}$$
+$$H_1: \text{There is a difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}$$
+
+We chose a significance level of:
+
+$$ {\alpha} = 0.01  $$
+because we wanted a statistically significant result if rejecting the null hypothesis to avoid false positive results and build robustness. 
+
+Our test statistic, T, is:
+
+$$T = |P_\text{high-rated} - P_\text{low-rated}|$$
+Which comes out to be: $$0.011521277908209948$$
+We chose this test statistic because we were testing for a difference not a directional bias (two tailed test). Furthermore it well quantifies the difference we are trying to measure between the two groups and is sensitive to large differences in groups. 
+
+Running a permutation test for 1000 shuffles yielded the following p-value:
+
+$$p = 0.0$$
+
+<iframe
+  src="assets/pro_cal.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed statistic of this test is around 0.012. The resulting p value is 0.0. Since this is less than the significance level we chose (0.0 < 0.01), we reject the null hypothesis. Thus, it is likely that there is a difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes.
+
+## Prediction Problem
+
+### The prediction problem we chose to tackle is: What features are the most deterministic when reliably predicting the bayesian rating of a recipe?
+
+Given that bayesian ratings are a continuous variable, this problem is a regression problem. 
+
+Our responsible variable is: Bayesian Ratings (a more data aware and bias adjusted version of the mean as explained above) 
+
+Our metric of choice is: $R^2$ 
+This is for the following reasons:
+1. Our data is heavily skewed with median being 4.50 on scale of 1 to 5. This means that metrics such as RMSE will reward underfitting models which solely predict the mean and punish those which are smarter but accumulate error due to the large cluster of data centered on the upper end of the scale. 
+2. $R^2$ punishes the models which underfit and rely on the mean, in fact by definition this metric scores models which guess the mean a 0. 
+3. A model that captures the obscure variance and trends of the data is rewarded heavily, which is exactly what we are looking for. 
+
+### Data
+
+We split our data into 80-20 train-test split. In order to account for randomness in the split, the same train-test split will be used for both models. 
+
+## Baseline Model
+### Baseline Features
+
+Our standard model is a standard bi-variate linear regression model. It uses 2 features:
+1. pro_cal_ratio: this is the protein calorie ratio for each recipe and is a quantitative continuous variable
+2. n_ingredients: this is the number of ingredients in each recipe and is a quantitative discrete variable 
+
+### Transformations
+
+Our first transformation was transforming the average ratings to Bayesian Ratings (using the formula mentioned above), which will serve as the response variable.
+
+We also transformed the Protein PDV to Protein-Calorie Ratio to make it more intuitive for the reader (informative with respect to the whole calories in the recipe). More importantly, it creates a feature that the model won't explore on it's own because it's multiplicative (quadratic feature).
+
+We used the standardscaler() to normalize our data in order to compare the weights of the features
+
+### Results
+
+Our baseline model had a $R^2$ of 0.0002. Considerably poor. 
+
+<iframe
+  src="assets/baseline.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This is a plot comparing actual bayesian ratings (x-axis) and our baseline model's predicted ratings (y-axis). From this plot the baseline model consistently predicts the same value at all labels thus showing habit of underfitting and instead just predicting the mean.
+
+<iframe
+  src="assets/baseline_res1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This plot compares the residuals of our baseline model with the actual bayesian ratings of our dataset. The residuals form a perfect straight line with little to no variance, meaning the model is most likely predicting the same value repeatedly. These residuals further reinforce the underfitting and mean predicting nature of the model. 
+
+<iframe
+  src="assets/baseline_res2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This plot compares the residuals of our baseline model with the predicted bayesian ratings of our model. The residuals show little to no variance once again. Although the residuals may appear constant in vertical distance, this is actually explained by underfitting and repeated prediction of the mean. 
+
+All in all, this is a poor model to predict Bayesian ratings with the features. This is because the $R^2$ value is 0.0002. Furthermore, the model shows clear signs of underfitting because it repeatedly predicts the mean because of the large skew in the data.
+
+## Final Model
+
+### Model
+For our final model we decided to use a random forest regression model. We chose this model because it averages out multiple decision trees, helping reduce overfitting and under fitting by averaging multiple predictions; reducing variance and improving robust fitting. 
+
+Although one concern we had which came true was the much larger training and inference time. 
+
+### Hyper Parameters
+
+The hyper parameters for this model are:
+
+ 1. 'n_estimator': This is the number of decision trees in the forest; more trees improve performance but increase training time. Choices are [100, 200]
+ 2. 'max_depth': This is the max depth of each tree; deeper models can model more complex trends but have the risk of overfitting. Choices are [10,20]
+ 3. 'min_samples_leaf': This is the minimum number of samples for a leaf node; higher values can reduce overfit by preventing trees from creating leaves with minimal samples and lower values can capture more detail but have the risk of overfitting. Choices are [5,10]
+ 4. 'max_features': This is the number of features taken into consideration when each node splits. Choices are ['sqrt', 'log2'] (squareroot and log2)
+
+### Quantitative Features
+
+For this model we chose the features :
+
+1. 'pro_cal_ratio': this is the protein calorie ratio for each recipe and is a quantitative continuous variable. We inferred that there is a statistically significant difference in the protein-calorie ratio between recipes with high and low bayesian ratings, thus making it a relevant feature to consider. 
+2. 'n_ingredients': this is the number of ingredients in each recipe and is a quantitative discrete variable. Number of ingredients in a recipe is often proportional to the complexity of the recipe, which could impact bayesian ratings, making it a relevant features.
+3. 'n_steps': this is the number of steps in each recipe and is a quantitative discrete variable. Similarly, number of steps in a recipe is often proportional to the complexity of the recipe, which could impact bayesian ratings, making it a relevant features
+4. 'minutes': this is the total cook time of a recipe in minutes and is quantitative continuous variable.
+5. 'calories': this is the total calorie count of a recipe and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+6. 'total_fat_PDV': this is the fat content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+7. 'sugar_PDV':  this is the sugar content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+8. 'sodium_PDV':  this is the sodium content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+9. 'protein_PDV':  this is the protein content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+10. 'saturated_fat_PDV': this is the saturated fat content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+11. 'carbohydrates_PDV': this is the carbohydrate content as a percentage of the FDA daily consumption guidelines and is a quantitative continuous variable. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+
+## Categorical Variables & Transformations
+
+We also added 2 categorical variables: 
+1. 'ingredients': this is the list of ingredients in the recipe which is a categorical nominal variable. Because important of ingredient is not weighed here, we use CountVectorizer to get a simple frequency count of ingredients. This is a component of the overall nutritional profile of a recipe. Thus, people following different diets and with varying health conditions could react differently to a recipe than others. This makes it a relevant feature to consider.
+2. 'tags':  this is the list of tags for a given recipe which is a categorical nominal variable. For this variable, we wanted to weigh the tags based on rarity and frequency and TF-IDF works perfectly in this case as it compares how often a tag appears in a given recipe versus how rare it is across all recipes. Certain tags may get more visibility due to factors like current trends, diets, etc. thus would be a relevant feature to consider. 
+
+### Cross Validation & Grid Search
+
+To train this model we first used a Grid Search with a K-Folds Cross Validation to find the optimal hyper parameters for this model. 
+
+We used 4 splits since our data ranges from 1 to 5
+
+Furthermore we used $R^2$ as our metric to compare parameter sets because of its regard for under fitting models and that is what we want our model to optimize for as well. 
+
+To speed up processing we changed 'n_jobs' to -1 to use multicore processing
+
+This yielded the following hyperparams:
+
+ 1. 'n_estimator': 100
+ 2. 'max_depth': 5
+ 3. 'min_samples_leaf': 20
+ 4. 'max_features': 'sqrt' (squareroot)
+
+### Results
+
+Our final model has a considerably better $R^2$ of 0.2989. 
+This is almost a 1000x increase in correlation to the real data when compared to the baseline! Astonishing! 
+
+<iframe
+  src="assets/final.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This plot compares the residuals of our baseline model with the actual bayesian ratings of our dataset. Although this model still has quite a way to go with consistently accurate predictions, it shows considerably less underfitting and has a better reaction to outlier variance.
+
+<iframe
+  src="assets/final_res1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+ This plot compares the residuals of our baseline model with the actual bayesian ratings of our dataset. These residuals show a clear improvement in variance. Nevertheless we can see some underfitting towards extreme values, but the model does actually adapts to features. The wider spread of residuals at the upper ratings shows mild heteroscedasticity.
+
+<iframe
+  src="assets/final_res2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+ This plot compares the residuals of our baseline model with the predicted bayesian ratings of our model. These residuals show consistent negative residuals which means it is repeatedly overpredicting from the true rating. Moreover, there are very few positive residuals, meaning it rarely undepredicts where a good model would have balanced extreme residuals. Yet, the model shows some heteroscedasticity and is a large improvement in predicting bayesian ratings when compared to our baseline.
+
+ To conclude, this model not only significantly outperforms the baseline in regards to the $R^2$ metric, it also shows considerably more variance in its residuals and predictions, therefore reducing the underfitting that was apparent in the baseline model, while also showing considerable improvements in learning the trends of the outliers and extreme data. 
+
+## Fairness Analysis
+
+### Question & Groups
+
+We wanted to know if our model was biased towards higher or lower ratings or if it fairly predicted both groups.
+
+Our two groups are:
+
+Highly-rated recipes (>= 4.63 Bayesian Rating)
+
+Lowly-rated recipes (< 4.63 Bayesian Rating)
+
+4.63 is the 75th percentile of the list of Bayesian Ratings of all recipes, and thus allowing us to isolate the higher rated group in comparison to others. When dealing with such skewed data, it is important to see the contrast of the model's predictions with outliers and the most common group. By choosing the upper quartile as the interval for our split, we gain more insight into how fair model's accuracy when comparing the top 25th percent of recipes versus the rest. 
+
+We would like to test the following hypotheses:
+
+Null Hypothesis $H_0$: The model is fair, as the precision for recipes with higher ratings and lower ratings are equal (and any difference is due to random noise).
+
+Alternative Hypothesis $H_1$: The model is unfair, as the precision, RMSE< for recipes with higher ratings and lower ratings are unequal.
+
+### Metrics:
+
+The metric we chose to test these hypotheses was RMSE as we were only testing for a difference, not a directional bias. Furthermore RMSE captures the magnitude of difference, which is all we need to test our hypotheses
+
+### Significance Level
+
+We chose a significance level of 0.01 because we wanted a statistically significant result if rejecting the null hypothesis to avoid false positive results and build robustness. 
+
+### Results:
+
+Observed difference (Low - High): 0.0357 
+P-value: 0.0000
+
+<iframe
+  src="assets/fairness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+## Conclusion
+
+With this p-value we can reject the null hypothesis. Therefore we are lead to believe that our model has a disparity in its accuracy towards high and low rating groups and thus bias towards a certain group.
+
+We had expected this to happen since our model is still quite sensitive to the immense bias in the data. 
+
+To combat this, we would ideally collect more data but realistically would use a form of imputation such as litwise deletion, so each rating group has an equal number of recipes or probabilistic imputation to assume recipes for the rest.
