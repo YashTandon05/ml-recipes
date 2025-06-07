@@ -1,6 +1,8 @@
 # The Satisfaction of Food; The Downfall of the World: A Machine Learning project that investigates Ratings on Recipes
 A Data Science project that investigates a recipes dataset to create a machine learning model to predict ratings of recipes
 
+By Yash Tandon and Shiv Mehta
+
 ## Intro
 
 ### Datascience Question
@@ -60,7 +62,7 @@ In order to clean and tidy the dataset for analysis, we took the following steps
 	- The last features we added were average and bayesian ratings. 
 		- Average ratings are given by the mean of each recipe
 		- Bayesian ratings give a more informed average rating for each recipe as it accounts for not only the recipe's true mean but also the skew of ratings in the dataset by incorporating the overall recipe mean. 
-			- The Bayesian average is computed as: $\text{Bayesian Rating} = \frac{v}{v + m} \cdot R + \frac{m}{v + m} \cdot C$, where:
+			- The Bayesian average is computed as: \[\text{Bayesian Rating} = \frac{v}{v + m} \cdot R + \frac{m}{v + m} \cdot C\], where:
             
             \( R \) = average rating for the recipe
             
@@ -245,23 +247,24 @@ The question we want to answer is: Is there a significant difference in the Prot
 
 Below are the Null and Alternate hypotheses we propose for this test:
 
-$$H_0: \text{There is no difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}$$
-$$H_1: \text{There is a difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}$$
+\[H_0: \text{There is no difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}\]
+
+\[H_1: \text{There is a difference in the mean Protein-Calorie ratio of highly-rated recipes and lowly-rated recipes}\]
 
 We chose a significance level of:
 
-$$ {\alpha} = 0.01  $$
+\[ {\alpha} = 0.01  \]
 because we wanted a statistically significant result if rejecting the null hypothesis to avoid false positive results and build robustness. 
 
 Our test statistic, T, is:
 
-$$T = |P_\text{high-rated} - P_\text{low-rated}|$$
-Which comes out to be: $$0.011521277908209948$$
+\[T = |P_\text{high-rated} - P_\text{low-rated}|\]
+Which comes out to be: \[0.011521277908209948\]
 We chose this test statistic because we were testing for a difference not a directional bias (two tailed test). Furthermore it well quantifies the difference we are trying to measure between the two groups and is sensitive to large differences in groups. 
 
 Running a permutation test for 1000 shuffles yielded the following p-value:
 
-$$p = 0.0$$
+\[p = 0.0\]
 
 <iframe
   src="assets/pro_cal.html"
@@ -280,10 +283,10 @@ Given that bayesian ratings are a continuous variable, this problem is a regress
 
 Our responsible variable is: Bayesian Ratings (a more data aware and bias adjusted version of the mean as explained above) 
 
-Our metric of choice is: $R^2$ 
+Our metric of choice is: \[R^2\]
 This is for the following reasons:
 1. Our data is heavily skewed with median being 4.50 on scale of 1 to 5. This means that metrics such as RMSE will reward underfitting models which solely predict the mean and punish those which are smarter but accumulate error due to the large cluster of data centered on the upper end of the scale. 
-2. $R^2$ punishes the models which underfit and rely on the mean, in fact by definition this metric scores models which guess the mean a 0. 
+2. \[R^2\] punishes the models which underfit and rely on the mean, in fact by definition this metric scores models which guess the mean a 0. 
 3. A model that captures the obscure variance and trends of the data is rewarded heavily, which is exactly what we are looking for. 
 
 ### Data
@@ -307,7 +310,7 @@ We used the standardscaler() to normalize our data in order to compare the weigh
 
 ### Results
 
-Our baseline model had a $R^2$ of 0.0002. Considerably poor. 
+Our baseline model had a \[R^2\] of 0.0002. Considerably poor. 
 
 <iframe
   src="assets/baseline.html"
@@ -336,7 +339,7 @@ This plot compares the residuals of our baseline model with the actual bayesian 
 
 This plot compares the residuals of our baseline model with the predicted bayesian ratings of our model. The residuals show little to no variance once again. Although the residuals may appear constant in vertical distance, this is actually explained by underfitting and repeated prediction of the mean. 
 
-All in all, this is a poor model to predict Bayesian ratings with the features. This is because the $R^2$ value is 0.0002. Furthermore, the model shows clear signs of underfitting because it repeatedly predicts the mean because of the large skew in the data.
+All in all, this is a poor model to predict Bayesian ratings with the features. This is because the \[R^2\] value is 0.0002. Furthermore, the model shows clear signs of underfitting because it repeatedly predicts the mean because of the large skew in the data.
 
 ## Final Model
 
@@ -382,7 +385,7 @@ To train this model we first used a Grid Search with a K-Folds Cross Validation 
 
 We used 4 splits since our data ranges from 1 to 5
 
-Furthermore we used $R^2$ as our metric to compare parameter sets because of its regard for under fitting models and that is what we want our model to optimize for as well. 
+Furthermore we used \[R^2\] as our metric to compare parameter sets because of its regard for under fitting models and that is what we want our model to optimize for as well. 
 
 To speed up processing we changed 'n_jobs' to -1 to use multicore processing
 
@@ -395,7 +398,7 @@ This yielded the following hyperparams:
 
 ### Results
 
-Our final model has a considerably better $R^2$ of 0.2989. 
+Our final model has a considerably better \[R^2\] of 0.2989. 
 This is almost a 1000x increase in correlation to the real data when compared to the baseline! Astonishing! 
 
 <iframe
@@ -425,7 +428,7 @@ This plot compares the residuals of our baseline model with the actual bayesian 
 
  This plot compares the residuals of our baseline model with the predicted bayesian ratings of our model. These residuals show consistent negative residuals which means it is repeatedly overpredicting from the true rating. Moreover, there are very few positive residuals, meaning it rarely undepredicts where a good model would have balanced extreme residuals. Yet, the model shows some heteroscedasticity and is a large improvement in predicting bayesian ratings when compared to our baseline.
 
- To conclude, this model not only significantly outperforms the baseline in regards to the $R^2$ metric, it also shows considerably more variance in its residuals and predictions, therefore reducing the underfitting that was apparent in the baseline model, while also showing considerable improvements in learning the trends of the outliers and extreme data. 
+ To conclude, this model not only significantly outperforms the baseline in regards to the \[R^2\] metric, it also shows considerably more variance in its residuals and predictions, therefore reducing the underfitting that was apparent in the baseline model, while also showing considerable improvements in learning the trends of the outliers and extreme data. 
 
 ## Fairness Analysis
 
@@ -443,9 +446,9 @@ Lowly-rated recipes (< 4.63 Bayesian Rating)
 
 We would like to test the following hypotheses:
 
-Null Hypothesis $H_0$: The model is fair, as the precision for recipes with higher ratings and lower ratings are equal (and any difference is due to random noise).
+Null Hypothesis \[H_0\]: The model is fair, as the precision for recipes with higher ratings and lower ratings are equal (and any difference is due to random noise).
 
-Alternative Hypothesis $H_1$: The model is unfair, as the precision, RMSE< for recipes with higher ratings and lower ratings are unequal.
+Alternative Hypothesis \[H_1\]: The model is unfair, as the precision, RMSE< for recipes with higher ratings and lower ratings are unequal.
 
 ### Metrics:
 
@@ -474,3 +477,7 @@ With this p-value we can reject the null hypothesis. Therefore we are lead to be
 We had expected this to happen since our model is still quite sensitive to the immense bias in the data. 
 
 To combat this, we would ideally collect more data but realistically would use a form of imputation such as litwise deletion, so each rating group has an equal number of recipes or probabilistic imputation to assume recipes for the rest.
+
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
